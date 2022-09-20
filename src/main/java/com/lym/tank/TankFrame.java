@@ -1,11 +1,13 @@
 package com.lym.tank;
 
+import com.sun.xml.internal.ws.wsdl.writer.document.Import;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * @author li yamin
@@ -50,6 +52,13 @@ public class TankFrame extends Frame {
         for (int i = 0; i < bulletList.size(); i++) {
             bulletList.get(i).paint(g);
         }
+        //这种迭代器的也适用
+//        for (Iterator it = bulletList.iterator();it.hasNext();){
+//            Bullet b = (Bullet) it.next();
+//            if (!b.isLive()){
+//                it.remove();
+//            }
+//        }
 
     }
 

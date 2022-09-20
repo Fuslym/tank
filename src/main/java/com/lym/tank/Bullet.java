@@ -11,6 +11,7 @@ public class Bullet {
     private static final int SPEED = 3; // 速度
     private Dir dir;
     private static final int WIDTH = 30, HEIGHT = 30;
+
     private boolean live = true;
     TankFrame tf = null;
     public Bullet(){}
@@ -51,5 +52,12 @@ public class Bullet {
         if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT){
             live = false;
         }
+    }
+    public boolean isLive() {
+        return live;
+    }
+
+    public void setLive(boolean live) {
+        this.live = live;
     }
 }
