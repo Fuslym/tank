@@ -10,6 +10,7 @@ public class Tank {
     private int x, y; // 位置
     private Dir dir = Dir.DOWN; // 方向
     private static final int SPEED = 10; // 速度
+    private boolean moving = false; // 是否静止
 
     public Tank(){}
 
@@ -22,19 +23,21 @@ public class Tank {
 
     public void paint(Graphics g) {
         g.fillRect(x,y,50,50);
-        switch (dir){
-            case LEFT:
-                x -= SPEED;
-                break;
-            case RIGHT:
-                x += SPEED;
-                break;
-            case UP:
-                y -= SPEED;
-                break;
-            case DOWN:
-                y += SPEED;
-                break;
+        if (moving){
+            switch (dir){
+                case LEFT:
+                    x -= SPEED;
+                    break;
+                case RIGHT:
+                    x += SPEED;
+                    break;
+                case UP:
+                    y -= SPEED;
+                    break;
+                case DOWN:
+                    y += SPEED;
+                    break;
+            }
         }
     }
 
@@ -44,5 +47,12 @@ public class Tank {
 
     public void setDir(Dir dir) {
         this.dir = dir;
+    }
+    public boolean isMoving() {
+        return moving;
+    }
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
     }
 }
