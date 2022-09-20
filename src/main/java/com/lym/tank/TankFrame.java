@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 /**
  * @author li yamin
@@ -13,7 +14,8 @@ import java.awt.event.WindowEvent;
 public class TankFrame extends Frame {
 
     private static int GAME_WIDTH = 800, GAME_HEIGHT = 600;
-    Tank tank = new Tank(200,200, Dir.DOWN);
+    java.util.List<Bullet> bulletList = new java.util.ArrayList<Bullet>();
+    Tank tank = new Tank(200,200, Dir.DOWN,this);
     Bullet bullet = new Bullet(200,200,Dir.DOWN);
 
     public TankFrame(){
@@ -38,7 +40,9 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g){
         tank.paint(g);// 坦克画自己
-        bullet.paint(g);
+        for(Bullet bullet : bulletList){
+            bullet.paint(g);
+        }
 
     }
 
@@ -80,6 +84,8 @@ public class TankFrame extends Frame {
                 case KeyEvent.VK_DOWN:
                     bD = true;
                     break;
+                case KeyEvent.VK_CONTROL:
+                    tank.fire();
                 default:
                     break;
             }

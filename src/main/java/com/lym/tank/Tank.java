@@ -11,14 +11,16 @@ public class Tank {
     private Dir dir = Dir.DOWN; // 方向
     private static final int SPEED = 10; // 速度
     private boolean moving = false; // 是否静止
+    private TankFrame tankFrame = null;
 
     public Tank(){}
 
-    public Tank(int x, int y, Dir dir){
+    public Tank(int x, int y, Dir dir,TankFrame tankFrame){
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.tankFrame = tankFrame;
     }
 
     public void paint(Graphics g) {
@@ -57,5 +59,9 @@ public class Tank {
 
     public void setMoving(boolean moving) {
         this.moving = moving;
+    }
+
+    public void fire() {
+        tankFrame.bulletList.add(new Bullet(this.x,this.y,this.dir));
     }
 }
