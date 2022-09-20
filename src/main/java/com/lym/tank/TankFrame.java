@@ -1,6 +1,5 @@
 package com.lym.tank;
 
-import javax.lang.model.element.VariableElement;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -13,12 +12,13 @@ import java.awt.event.WindowEvent;
  */
 public class TankFrame extends Frame {
 
+    private static int GAME_WIDTH = 800, GAME_HEIGHT = 600;
     Tank tank = new Tank(200,200, Dir.DOWN);
     Bullet bullet = new Bullet(200,200,Dir.DOWN);
 
     public TankFrame(){
         setVisible(true);
-        setSize(800,600);
+        setSize(GAME_WIDTH,GAME_HEIGHT);
         setResizable(false); // 不能改变窗口
         setTitle("坦克大战");
 
@@ -40,6 +40,22 @@ public class TankFrame extends Frame {
         tank.paint(g);// 坦克画自己
         bullet.paint(g);
 
+    }
+
+    Image offScreenImage = null;
+
+    @Override
+    public void update(Graphics g){
+        if (offScreenImage == null){
+            offScreenImage = this.createImage(GAME_WIDTH,GAME_HEIGHT);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.black);
+        gOffScreen.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage,0,0,null);
     }
 
     class MyKeyListener extends KeyAdapter{
