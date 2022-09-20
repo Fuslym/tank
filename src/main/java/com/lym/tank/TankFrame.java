@@ -13,10 +13,10 @@ import java.util.ArrayList;
  */
 public class TankFrame extends Frame {
 
-    private static int GAME_WIDTH = 800, GAME_HEIGHT = 600;
+    public static int GAME_WIDTH = 800, GAME_HEIGHT = 600;
     java.util.List<Bullet> bulletList = new java.util.ArrayList<Bullet>();
     Tank tank = new Tank(200,200, Dir.DOWN,this);
-    Bullet bullet = new Bullet(200,200,Dir.DOWN);
+//    Bullet bullet = new Bullet(200,200,Dir.DOWN,this);
 
     public TankFrame(){
         setVisible(true);
@@ -39,9 +39,16 @@ public class TankFrame extends Frame {
     // 生成、改变图形时自动调用
     @Override
     public void paint(Graphics g){
+        Color c = g.getColor();
+        g.setColor(Color.WHITE);
+        g.drawString("子弹的数量:"+ bulletList.size(),10,60);
         tank.paint(g);// 坦克画自己
-        for(Bullet bullet : bulletList){
-            bullet.paint(g);
+        // 迭代器会出错
+//        for(Bullet bullet : bulletList){
+//            bullet.paint(g);
+//        }
+        for (int i = 0; i < bulletList.size(); i++) {
+            bulletList.get(i).paint(g);
         }
 
     }
