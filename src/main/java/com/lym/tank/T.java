@@ -15,6 +15,7 @@ public class T {
         frame.setSize(800,600);
         frame.setResizable(false); // 不能改变窗口
         frame.setTitle("坦克大战");
+        System.out.println(1);
 
         frame.addWindowListener(new WindowAdapter() {
             @Override
