@@ -12,6 +12,8 @@ public class Tank {
     private static final int SPEED = 10; // 速度
     private boolean moving = false; // 是否静止
     private TankFrame tankFrame = null;
+    public static final int HEIGHT = ResourceMgr.tankD.getHeight();
+    public static final int WIDTH = ResourceMgr.tankD.getWidth();
 
     public Tank(){}
 
@@ -24,26 +26,21 @@ public class Tank {
     }
 
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.YELLOW);
-        g.fillRect(x,y,50,50);
-        g.setColor(c);
-        if (moving){
-            switch (dir){
-                case LEFT:
-                    x -= SPEED;
-                    break;
-                case RIGHT:
-                    x += SPEED;
-                    break;
-                case UP:
-                    y -= SPEED;
-                    break;
-                case DOWN:
-                    y += SPEED;
-                    break;
-            }
+        switch (dir){
+            case DOWN:
+                g.drawImage(ResourceMgr.tankD,x,y,null);
+                break;
+            case UP:
+                g.drawImage(ResourceMgr.tankU,x,y,null);
+                break;
+            case LEFT:
+                g.drawImage(ResourceMgr.tankL,x,y,null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.tankR,x,y,null);
         }
+        move();
+
     }
 
     public Dir getDir() {
@@ -61,7 +58,27 @@ public class Tank {
         this.moving = moving;
     }
 
+    private  void move(){
+        if (moving){
+            switch (dir){
+                case LEFT:
+                    x -= SPEED;
+                    break;
+                case RIGHT:
+                    x += SPEED;
+                    break;
+                case UP:
+                    y -= SPEED;
+                    break;
+                case DOWN:
+                    y += SPEED;
+                    break;
+            }
+        }
+    }
     public void fire() {
-        tankFrame.bulletList.add(new Bullet(this.x,this.y,this.dir,tankFrame));
+        int bx = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
+        int by = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
+        tankFrame.bulletList.add(new Bullet(bx,by,this.dir,tankFrame));
     }
 }

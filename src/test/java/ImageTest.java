@@ -14,6 +14,7 @@ public class ImageTest {
     public void test() throws IOException {
         try{
             // this.getClass()可以换成ImageTest.class
+            // resource下的路径都是classpath路径下
             BufferedImage image = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/bulletD.gif"));
             System.out.println(image != null);
         }catch (Exception e){

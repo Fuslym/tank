@@ -10,7 +10,8 @@ public class Bullet {
     private int x, y;
     private static final int SPEED = 3; // 速度
     private Dir dir;
-    private static final int WIDTH = 30, HEIGHT = 30;
+    public static final int HEIGHT = ResourceMgr.bulletD.getHeight();
+    public static final int WIDTH = ResourceMgr.bulletD.getWidth();
 
     private boolean live = true;
     TankFrame tf = null;
@@ -27,10 +28,19 @@ public class Bullet {
         if (!live){
             tf.bulletList.remove(this);
         }
-        Color c = g.getColor();
-        g.setColor(Color.red);
-        g.fillOval(x, y, WIDTH, HEIGHT);
-        g.setColor(c);
+        switch (dir) {
+            case DOWN:
+                g.drawImage(ResourceMgr.bulletD, x, y, null);
+                break;
+            case UP:
+                g.drawImage(ResourceMgr.bulletU, x, y, null);
+                break;
+            case LEFT:
+                g.drawImage(ResourceMgr.bulletL, x, y, null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.bulletR, x, y, null);
+        }
         move();
     }
 
