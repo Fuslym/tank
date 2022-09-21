@@ -1,6 +1,7 @@
 package com.lym.tank;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * @author li yamin
@@ -10,20 +11,22 @@ public class Tank {
     private int x;
     private int y; // 位置
     private Dir dir = Dir.DOWN; // 方向
-    private static final int SPEED = 10; // 速度
-    private boolean moving = false; // 是否静止
+    private static final int SPEED = 1; // 速度
+    private boolean moving = true; // 是否静止
     private TankFrame tankFrame = null;
     public static final int HEIGHT = ResourceMgr.tankD.getHeight();
     public static final int WIDTH = ResourceMgr.tankD.getWidth();
     private boolean living = true; //生命
-
+    private Group group = Group.BAD;
+    private Random random = new Random();
     public Tank(){}
 
-    public Tank(int x, int y, Dir dir,TankFrame tankFrame){
+    public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame){
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group = group;
         this.tankFrame = tankFrame;
     }
 
@@ -47,6 +50,14 @@ public class Tank {
         move();
 
     }
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
     public int getX() {
         return x;
     }
@@ -79,27 +90,34 @@ public class Tank {
     }
 
     private  void move(){
-        if (moving){
-            switch (dir){
-                case LEFT:
-                    x -= SPEED;
-                    break;
-                case RIGHT:
-                    x += SPEED;
-                    break;
-                case UP:
-                    y -= SPEED;
-                    break;
-                case DOWN:
-                    y += SPEED;
-                    break;
-            }
+        if (!moving) return;
+        switch (dir){
+            case LEFT:
+                x -= SPEED;
+                break;
+            case RIGHT:
+                x += SPEED;
+                break;
+            case UP:
+                y -= SPEED;
+                break;
+            case DOWN:
+                y += SPEED;
+                break;
+            default:
+                break;
         }
+
+        if (random.nextInt(10) > 8){
+            this.fire();
+        }
+
+
     }
     public void fire() {
         int bx = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int by = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        tankFrame.bulletList.add(new Bullet(bx,by,this.dir,tankFrame));
+        tankFrame.bulletList.add(new Bullet(bx,by,this.dir,this.group,tankFrame));
     }
 
     public void die() {

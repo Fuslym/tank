@@ -12,16 +12,17 @@ public class Bullet {
     private Dir dir;
     public static final int HEIGHT = ResourceMgr.bulletD.getHeight();
     public static final int WIDTH = ResourceMgr.bulletD.getWidth();
-
+    private Group group = Group.BAD;
     private boolean living = true;
     TankFrame tf = null;
     public Bullet(){}
 
-    public Bullet(int x, int y, Dir dir,TankFrame tf) {
+    public Bullet(int x, int y, Dir dir,Group group,TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.tf = tf;
+        this.group = group;
     }
 
     public void paint(Graphics g) {
@@ -72,6 +73,8 @@ public class Bullet {
     }
 
     public void collideWith(Tank tank) {
+        if (this.group == tank.getGroup()) return;
+        //TODO：用一个Rect来记录子弹的位置
         Rectangle bulletRect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
         Rectangle tankRect = new Rectangle(tank.getX(),tank.getY(), Tank.WIDTH, Tank.HEIGHT);
         if (bulletRect.intersects(tankRect)){
