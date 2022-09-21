@@ -9,7 +9,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Iterator;
 
 /**
  * @author li yamin
@@ -18,10 +17,10 @@ import java.util.Iterator;
 public class TankFrame extends Frame {
 
     public static int GAME_WIDTH = 800, GAME_HEIGHT = 600;
-    List<Bullet> bulletList = new ArrayList<Bullet>();
-    Tank tank = new Tank(200,500, Dir.DOWN,Group.GOOD,this);
-    public List<Tank> tankList = new ArrayList<Tank>(); // public 另一个类才能用
-//    Bullet bullet = new Bullet(200,200,Dir.DOWN,this);
+    Tank tank = new Tank(200,500, Dir.DOWN,Group.GOOD,this);// 我方坦克
+    List<Bullet> bulletList = new ArrayList<Bullet>(); // 子弹
+    public List<Tank> tankList = new ArrayList<Tank>(); // 敌人坦克，public 另一个类才能用
+    Explode explode = new Explode(200,200,this); //爆炸
 
     public TankFrame(){
         setVisible(true);
@@ -53,6 +52,8 @@ public class TankFrame extends Frame {
 //        for(Bullet bullet : bulletList){
 //            bullet.paint(g);
 //        }
+        explode.paint(g);
+
         for (int i = 0; i < bulletList.size(); i++) {
             bulletList.get(i).paint(g);
         }
@@ -61,6 +62,7 @@ public class TankFrame extends Frame {
             tankList.get(i).paint(g);
         }
 
+        // 每个子弹去和敌人去检测碰撞
         for (int i = 0; i < bulletList.size(); i++) {
             for (int j = 0; j < tankList.size(); j++) {
                 bulletList.get(i).collideWith(tankList.get(j));
