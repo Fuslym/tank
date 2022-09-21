@@ -80,6 +80,7 @@ public class Bullet {
         if (bulletRect.intersects(tankRect)){
             tank.die();
             this.die();
+            this.tf.explodeList.add(new Explode(tank.getX(),tank.getY(),this.tf));// 爆炸
         }
     }
 
