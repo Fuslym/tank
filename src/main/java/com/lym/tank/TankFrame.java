@@ -7,6 +7,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Iterator;
 
 /**
@@ -16,8 +18,9 @@ import java.util.Iterator;
 public class TankFrame extends Frame {
 
     public static int GAME_WIDTH = 800, GAME_HEIGHT = 600;
-    java.util.List<Bullet> bulletList = new java.util.ArrayList<Bullet>();
-    Tank tank = new Tank(200,200, Dir.DOWN,this);
+    List<Bullet> bulletList = new ArrayList<Bullet>();
+    Tank tank = new Tank(200,500, Dir.DOWN,this);
+    public List<Tank> tankList = new ArrayList<Tank>(); // public 另一个类才能用
 //    Bullet bullet = new Bullet(200,200,Dir.DOWN,this);
 
     public TankFrame(){
@@ -44,6 +47,7 @@ public class TankFrame extends Frame {
         Color c = g.getColor();
         g.setColor(Color.WHITE);
         g.drawString("子弹的数量:"+ bulletList.size(),10,60);
+        g.drawString("敌人的数量:"+ tankList.size(),10,80);
         tank.paint(g);// 坦克画自己
         // 迭代器会出错
 //        for(Bullet bullet : bulletList){
@@ -51,6 +55,16 @@ public class TankFrame extends Frame {
 //        }
         for (int i = 0; i < bulletList.size(); i++) {
             bulletList.get(i).paint(g);
+        }
+
+        for (int i = 0; i < tankList.size(); i++) {
+            tankList.get(i).paint(g);
+        }
+
+        for (int i = 0; i < bulletList.size(); i++) {
+            for (int j = 0; j < tankList.size(); j++) {
+                bulletList.get(i).collideWith(tankList.get(j));
+            }
         }
         //这种迭代器的也适用
 //        for (Iterator it = bulletList.iterator();it.hasNext();){

@@ -7,13 +7,15 @@ import java.awt.*;
  * @create 2022-09-20
  */
 public class Tank {
-    private int x, y; // 位置
+    private int x;
+    private int y; // 位置
     private Dir dir = Dir.DOWN; // 方向
     private static final int SPEED = 10; // 速度
     private boolean moving = false; // 是否静止
     private TankFrame tankFrame = null;
     public static final int HEIGHT = ResourceMgr.tankD.getHeight();
     public static final int WIDTH = ResourceMgr.tankD.getWidth();
+    private boolean living = true; //生命
 
     public Tank(){}
 
@@ -26,6 +28,9 @@ public class Tank {
     }
 
     public void paint(Graphics g) {
+        if (!living){
+            tankFrame.tankList.remove(this);
+        }
         switch (dir){
             case DOWN:
                 g.drawImage(ResourceMgr.tankD,x,y,null);
@@ -41,6 +46,21 @@ public class Tank {
         }
         move();
 
+    }
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     public Dir getDir() {
@@ -80,5 +100,9 @@ public class Tank {
         int bx = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int by = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
         tankFrame.bulletList.add(new Bullet(bx,by,this.dir,tankFrame));
+    }
+
+    public void die() {
+        living = false;
     }
 }

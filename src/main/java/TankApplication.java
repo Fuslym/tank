@@ -1,3 +1,5 @@
+import com.lym.tank.Dir;
+import com.lym.tank.Tank;
 import com.lym.tank.TankFrame;
 
 /**
@@ -6,10 +8,13 @@ import com.lym.tank.TankFrame;
  */
 public class TankApplication {
     public static void main(String[] args) throws InterruptedException {
-        TankFrame tank = new TankFrame();
+        TankFrame tankFrame = new TankFrame();
+        for (int i = 0; i < 5; i++) {
+            tankFrame.tankList.add(new Tank(100 + i * 50,200, Dir.DOWN,tankFrame));
+        }
         while (true){
             Thread.sleep(50);
-            tank.repaint();
+            tankFrame.repaint();
         }
     }
 }
