@@ -8,7 +8,7 @@ import java.awt.*;
  */
 public class Bullet {
     private int x, y;
-    private static final int SPEED = 3; // 速度
+    private static final int SPEED = 8; // 速度
     private Dir dir;
     public static final int HEIGHT = ResourceMgr.bulletD.getHeight();
     public static final int WIDTH = ResourceMgr.bulletD.getWidth();
@@ -16,6 +16,7 @@ public class Bullet {
     private boolean living = true;
     TankFrame tf = null;
     public Bullet(){}
+    Rectangle rectangle = new Rectangle();
 
     public Bullet(int x, int y, Dir dir,Group group,TankFrame tf) {
         this.x = x;
@@ -23,6 +24,11 @@ public class Bullet {
         this.dir = dir;
         this.tf = tf;
         this.group = group;
+
+        rectangle.x = this.x;
+        rectangle.y = this.y;
+        rectangle.width = WIDTH;
+        rectangle.height = HEIGHT;
     }
 
     public void paint(Graphics g) {
@@ -63,6 +69,8 @@ public class Bullet {
         if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT){
             living = false;
         }
+        rectangle.x = this.x;
+        rectangle.y = this.y;
     }
     public boolean isLive() {
         return living;
@@ -74,13 +82,15 @@ public class Bullet {
 
     public void collideWith(Tank tank) {
         if (this.group == tank.getGroup()) return;
-        //TODO：用一个Rect来记录子弹的位置
-        Rectangle bulletRect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
-        Rectangle tankRect = new Rectangle(tank.getX(),tank.getY(), Tank.WIDTH, Tank.HEIGHT);
-        if (bulletRect.intersects(tankRect)){
+        // 每次都要new n* m个对象，需要改为用一个Rect来记录子弹的位置
+//        Rectangle bulletRect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
+//        Rectangle tankRect = new Rectangle(tank.getX(),tank.getY(), Tank.WIDTH, Tank.HEIGHT);
+        if (this.rectangle.intersects(tank.rectangle)){
             tank.die();
             this.die();
-            this.tf.explodeList.add(new Explode(tank.getX(),tank.getY(),this.tf));// 爆炸
+            int ex = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
+            int ey = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
+            this.tf.explodeList.add(new Explode(ex, ey, this.tf));// 爆炸
         }
     }
 
