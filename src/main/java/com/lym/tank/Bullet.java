@@ -32,7 +32,7 @@ public class Bullet {
     }
 
     public void paint(Graphics g) {
-        if (!living){
+        if (!living){// 死了
             tf.bulletList.remove(this);
         }
         switch (dir) {
@@ -81,7 +81,7 @@ public class Bullet {
     }
 
     public void collideWith(Tank tank) {
-        if (this.group == tank.getGroup()) return;
+        if (this.group == tank.getGroup()) return;// 子弹对同类无效
         // 每次都要new n* m个对象，需要改为用一个Rect来记录子弹的位置
 //        Rectangle bulletRect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
 //        Rectangle tankRect = new Rectangle(tank.getX(),tank.getY(), Tank.WIDTH, Tank.HEIGHT);

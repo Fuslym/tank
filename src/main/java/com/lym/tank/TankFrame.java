@@ -17,7 +17,7 @@ import java.util.List;
 public class TankFrame extends Frame {
 
     public static int GAME_WIDTH = 800, GAME_HEIGHT = 600;
-    Tank tank = new Tank(200,500, Dir.DOWN,Group.GOOD,this);// 我方坦克
+    Tank tank = new Tank(200,500, Dir.UP,Group.GOOD,this);// 我方坦克
     List<Bullet> bulletList = new ArrayList<Bullet>(); // 子弹
     public List<Tank> tankList = new ArrayList<Tank>(); // 敌人坦克，public 另一个类才能用
     List<Explode> explodeList = new ArrayList<>();
@@ -28,7 +28,7 @@ public class TankFrame extends Frame {
         setSize(GAME_WIDTH,GAME_HEIGHT);
         setResizable(false); // 不能改变窗口
         setTitle("坦克大战");
-
+        tank.setMoving(false);// 我方坦克开始静止
         // 内部类
         this.addKeyListener(new MyKeyListener());
 
@@ -76,6 +76,7 @@ public class TankFrame extends Frame {
             for (int j = 0; j < tankList.size(); j++) {
                 bulletList.get(i).collideWith(tankList.get(j));
             }
+//            bulletList.get(i).collideWith(tank);// 自己加的打我方坦克
         }
         //这种迭代器的也适用
 //        for (Iterator it = bulletList.iterator();it.hasNext();){

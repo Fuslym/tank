@@ -1,7 +1,4 @@
-import com.lym.tank.Dir;
-import com.lym.tank.Group;
-import com.lym.tank.Tank;
-import com.lym.tank.TankFrame;
+import com.lym.tank.*;
 
 /**
  * @author li yamin
@@ -10,7 +7,8 @@ import com.lym.tank.TankFrame;
 public class TankApplication {
     public static void main(String[] args) throws InterruptedException {
         TankFrame tankFrame = new TankFrame();
-        for (int i = 0; i < 5; i++) {
+        int count = Integer.parseInt((String) PropertyMgr.get("initTankCount"));
+        for (int i = 0; i < count; i++) {
             tankFrame.tankList.add(new Tank(100 + i * 50,200, Dir.DOWN, Group.BAD,tankFrame));
         }
         while (true){

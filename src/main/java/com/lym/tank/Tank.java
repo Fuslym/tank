@@ -40,6 +40,11 @@ public class Tank {
     public void paint(Graphics g) {
         if (!living){
             tankFrame.tankList.remove(this);
+//            if (this.group == Group.GOOD){// 打我方坦克
+//                tankFrame.tank = null;
+//                System.exit(0);
+//            }
+
         }
         switch (dir){
             case DOWN:
@@ -147,6 +152,7 @@ public class Tank {
         this.dir = Dir.values()[random.nextInt(4)];
     }
 
+    // 生成子弹
     public void fire() {
         int bx = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int by = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
