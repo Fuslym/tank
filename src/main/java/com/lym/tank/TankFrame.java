@@ -17,18 +17,13 @@ import java.util.List;
 public class TankFrame extends Frame {
 
     public static int GAME_WIDTH = 800, GAME_HEIGHT = 600;
-    Tank tank = new Tank(200,500, Dir.UP,Group.GOOD,this);// 我方坦克
-    List<Bullet> bulletList = new ArrayList<Bullet>(); // 子弹
-    public List<Tank> tankList = new ArrayList<Tank>(); // 敌人坦克，public 另一个类才能用
-    List<Explode> explodeList = new ArrayList<>();
-    Explode explode = new Explode(200,200,this); //爆炸
+    GameModel gameModel = new GameModel();
 
     public TankFrame(){
         setVisible(true);
         setSize(GAME_WIDTH,GAME_HEIGHT);
         setResizable(false); // 不能改变窗口
         setTitle("坦克大战");
-        tank.setMoving(false);// 我方坦克开始静止
         // 内部类
         this.addKeyListener(new MyKeyListener());
 
@@ -44,47 +39,7 @@ public class TankFrame extends Frame {
     // 生成、改变图形时自动调用
     @Override
     public void paint(Graphics g){
-        Color c = g.getColor();
-        g.setColor(Color.WHITE);
-        g.drawString("子弹的数量:"+ bulletList.size(),10,40);
-        g.drawString("敌人的数量:"+ tankList.size(),10,60);
-        g.drawString("爆炸数量:"+ explodeList.size(),10,80);
-        tank.paint(g);// 坦克画自己
-        // 迭代器会出错
-//        for(Bullet bullet : bulletList){
-//            bullet.paint(g);
-//        }
-//        explode.paint(g);
-
-        // 画子弹
-        for (int i = 0; i < bulletList.size(); i++) {
-            bulletList.get(i).paint(g);
-        }
-
-        // 画敌方坦克
-        for (int i = 0; i < tankList.size(); i++) {
-            tankList.get(i).paint(g);
-        }
-
-        // 画子弹
-        for (int i = 0; i < explodeList.size(); i++) {
-            explodeList.get(i).paint(g);
-        }
-
-        // 每个子弹去和敌人去检测碰撞
-        for (int i = 0; i < bulletList.size(); i++) {
-            for (int j = 0; j < tankList.size(); j++) {
-                bulletList.get(i).collideWith(tankList.get(j));
-            }
-//            bulletList.get(i).collideWith(tank);// 自己加的打我方坦克
-        }
-        //这种迭代器的也适用
-//        for (Iterator it = bulletList.iterator();it.hasNext();){
-//            Bullet b = (Bullet) it.next();
-//            if (!b.isLive()){
-//                it.remove();
-//            }
-//        }
+        gameModel.paint(g);// 画GameModel
 
     }
 
@@ -127,7 +82,7 @@ public class TankFrame extends Frame {
                     bD = true;
                     break;
                 case KeyEvent.VK_CONTROL:
-                    tank.fire();
+                    gameModel.tank.fire();
                 default:
                     break;
             }
@@ -158,13 +113,13 @@ public class TankFrame extends Frame {
 
         private void setMainTankDir(){
             if (!bL && !bR && !bU && !bD){
-                tank.setMoving(false);
+                gameModel.tank.setMoving(false);
             }else{
-                tank.setMoving(true);
-                if (bL) tank.setDir(Dir.LEFT);
-                if (bR) tank.setDir(Dir.RIGHT);
-                if (bU) tank.setDir(Dir.UP);
-                if (bD) tank.setDir(Dir.DOWN);
+                gameModel.tank.setMoving(true);
+                if (bL) gameModel.tank.setDir(Dir.LEFT);
+                if (bR) gameModel.tank.setDir(Dir.RIGHT);
+                if (bU) gameModel.tank.setDir(Dir.UP);
+                if (bD) gameModel.tank.setDir(Dir.DOWN);
             }
         }
     }

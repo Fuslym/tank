@@ -14,7 +14,6 @@ public class Tank {
     private Dir dir = Dir.DOWN; // 方向
     private static final int SPEED = 5; // 速度
     private boolean moving = true; // 是否静止
-    TankFrame tankFrame = null;
     public static final int HEIGHT = ResourceMgr.tankD.getHeight();
     public static final int WIDTH = ResourceMgr.tankD.getWidth();
     private boolean living = true; //生命
@@ -23,15 +22,16 @@ public class Tank {
     Rectangle rectangle = new Rectangle();// 只需要一个对象
 //    FireStrategy fireStrategy = new DefaultFireStrategy();
     FireStrategy fireStrategy = null;
+    GameModel gameModel = null;
     public Tank(){}
 
-    public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame){
+    public Tank(int x, int y, Dir dir, Group group, GameModel gameModel){
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.tankFrame = tankFrame;
+        this.gameModel = gameModel;
 
         // rectangle赋值
         rectangle.x = this.x;
@@ -43,7 +43,7 @@ public class Tank {
 
     public void paint(Graphics g) {
         if (!living){
-            tankFrame.tankList.remove(this);
+            gameModel.tankList.remove(this);
 //            if (this.group == Group.GOOD){// 打我方坦克
 //                tankFrame.tank = null;
 //                System.exit(0);

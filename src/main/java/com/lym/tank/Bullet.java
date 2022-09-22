@@ -14,15 +14,15 @@ public class Bullet {
     public static final int WIDTH = ResourceMgr.bulletD.getWidth();
     private Group group = Group.BAD;
     private boolean living = true;
-    TankFrame tf = null;
+    GameModel gameModel = null;
     public Bullet(){}
     Rectangle rectangle = new Rectangle();
 
-    public Bullet(int x, int y, Dir dir,Group group,TankFrame tf) {
+    public Bullet(int x, int y, Dir dir,Group group,GameModel gameModel) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tf = tf;
+        this.gameModel = gameModel;
         this.group = group;
 
         rectangle.x = this.x;
@@ -30,12 +30,12 @@ public class Bullet {
         rectangle.width = WIDTH;
         rectangle.height = HEIGHT;
 
-        tf.bulletList.add(this);// new出来时就加入到list集合中，这样在fire()可以直接new对象出来就可以
+        gameModel.bulletList.add(this);// new出来时就加入到list集合中，这样在fire()可以直接new对象出来就可以
     }
 
     public void paint(Graphics g) {
         if (!living){// 死了
-            tf.bulletList.remove(this);
+            gameModel.bulletList.remove(this);
         }
         switch (dir) {
             case DOWN:
@@ -92,7 +92,7 @@ public class Bullet {
             this.die();
             int ex = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
             int ey = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-            this.tf.explodeList.add(new Explode(ex, ey, this.tf));// 爆炸
+            gameModel.explodeList.add(new Explode(ex, ey, this.gameModel));// 爆炸
         }
     }
 
