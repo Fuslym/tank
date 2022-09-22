@@ -1,6 +1,7 @@
 package com.lym.tank;
 
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 /**
@@ -13,13 +14,15 @@ public class Tank {
     private Dir dir = Dir.DOWN; // 方向
     private static final int SPEED = 5; // 速度
     private boolean moving = true; // 是否静止
-    private TankFrame tankFrame = null;
+    TankFrame tankFrame = null;
     public static final int HEIGHT = ResourceMgr.tankD.getHeight();
     public static final int WIDTH = ResourceMgr.tankD.getWidth();
     private boolean living = true; //生命
     private Group group = Group.BAD;
     private Random random = new Random();
     Rectangle rectangle = new Rectangle();// 只需要一个对象
+//    FireStrategy fireStrategy = new DefaultFireStrategy();
+    FireStrategy fireStrategy = null;
     public Tank(){}
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame){
@@ -35,6 +38,7 @@ public class Tank {
         rectangle.y = this.y;
         rectangle.width = WIDTH;
         rectangle.height = HEIGHT;
+
     }
 
     public void paint(Graphics g) {
@@ -154,9 +158,22 @@ public class Tank {
 
     // 生成子弹
     public void fire() {
-        int bx = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
-        int by = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        tankFrame.bulletList.add(new Bullet(bx,by,this.dir,this.group,tankFrame));
+        if (group == Group.GOOD){
+            String className = (String)PropertyMgr.get("goodFS");
+            try {
+                fireStrategy = (FireStrategy) Class.forName(className).getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+            String className = (String)PropertyMgr.get("badFS");
+            try {
+                fireStrategy = (FireStrategy) Class.forName(className).getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        fireStrategy.fire(this);
     }
 
     public void die() {

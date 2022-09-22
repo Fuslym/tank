@@ -8,6 +8,8 @@ import java.util.Properties;
  * @create 2022-09-21
  */
 public class PropertyMgr {
+
+    private PropertyMgr(){}// 修改其为单例模式，因为其是直接调用静态方法
     static Properties props = new Properties();
 
     static{

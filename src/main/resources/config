@@ -1,2 +1,7 @@
 #tanks count at initialization
 initTankCount=10
+
+
+#fireStrategy
+goodFS=com.lym.tank.FourDirFireStrategy
+badFS=com.lym.tank.DefaultFireStrategy

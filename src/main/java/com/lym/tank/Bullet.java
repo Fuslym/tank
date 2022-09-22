@@ -29,6 +29,8 @@ public class Bullet {
         rectangle.y = this.y;
         rectangle.width = WIDTH;
         rectangle.height = HEIGHT;
+
+        tf.bulletList.add(this);// new出来时就加入到list集合中，这样在fire()可以直接new对象出来就可以
     }
 
     public void paint(Graphics g) {

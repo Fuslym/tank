@@ -9,6 +9,9 @@ import java.io.IOException;
  * @create 2022-09-21
  */
 public class ResourceMgr {
+
+    private ResourceMgr(){}// 都是静态属性，直接私有构造方法实现单例化
+
     public static BufferedImage tankL, tankU, tankR, tankD;
     public static BufferedImage bulletL, bulletU, bulletR, bulletD;
     public static BufferedImage[] explodes = new BufferedImage[16];
