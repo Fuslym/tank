@@ -82,8 +82,8 @@ public class Bullet extends GameObject{
         this.living = live;
     }
 
-    public void collideWith(Tank tank) {
-        if (this.group == tank.getGroup()) return;// 子弹对同类无效
+    public boolean collideWith(Tank tank) {
+        if (this.group == tank.getGroup()) return false;// 子弹对同类无效
         // 每次都要new n* m个对象，需要改为用一个Rect来记录子弹的位置
 //        Rectangle bulletRect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
 //        Rectangle tankRect = new Rectangle(tank.getX(),tank.getY(), Tank.WIDTH, Tank.HEIGHT);
@@ -93,7 +93,9 @@ public class Bullet extends GameObject{
             int ex = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
             int ey = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
             gameModel.add(new Explode(ex, ey, this.gameModel));// 爆炸
+            return true;
         }
+        return false;
     }
 
     private void die() {

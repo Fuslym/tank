@@ -1,7 +1,8 @@
 package com.lym.tank;
 
-import com.lym.tank.cor.BulletTankCollider;
-import com.lym.tank.cor.Collider;
+import com.lym.tank.cor.BulletTankCollide;
+import com.lym.tank.cor.Collide;
+import com.lym.tank.cor.CollideChain;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,7 +18,8 @@ public class GameModel {
 //    List<Tank> tankList = new ArrayList<Tank>(); // 敌人坦克
 //    List<Explode> explodeList = new ArrayList<>();
     List<GameObject> objects = new ArrayList<>();
-    Collider cor = new BulletTankCollider();
+//    Collide cor = new BulletTankCollide();
+    CollideChain collideChain = new CollideChain();
     private static final int count = Integer.parseInt((String) PropertyMgr.get("initTankCount"));
 
     public GameModel(){
@@ -48,13 +50,16 @@ public class GameModel {
             objects.get(i).paint(g);
         }
 
-        // 碰撞
+        // 现在子弹和坦克在一个实体里面，如何解决碰撞问题
+        // 解决碰撞
         // 坦克与坦克之间得相撞，需要在写一个方法
         for (int i = 0; i < objects.size(); i++) {
             for (int j = i + 1 ; j < objects.size(); j++) {
                 GameObject o1 = objects.get(i);
                 GameObject o2 = objects.get(j);
-                cor.collide(o1,o2);
+                if (collideChain.collide(o1,o2)){// 相撞结束这次得碰撞
+                    break;
+                }
             }
         }
 

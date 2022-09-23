@@ -5,3 +5,6 @@ initTankCount=10
 #fireStrategy
 goodFS=com.lym.tank.FourDirFireStrategy
 badFS=com.lym.tank.DefaultFireStrategy
+
+#collisionMethod
+collision=com.lym.tank.cor.BulletTankCollide,com.lym.tank.cor.TankTankCollide

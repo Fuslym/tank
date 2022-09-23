@@ -11,6 +11,7 @@ import java.util.Random;
 public class Tank extends GameObject {
     private int x;
     private int y; // 位置
+    private int preX,preY;
     private Dir dir = Dir.DOWN; // 方向
     private static final int SPEED = 5; // 速度
     private boolean moving = true; // 是否静止
@@ -19,7 +20,7 @@ public class Tank extends GameObject {
     private boolean living = true; //生命
     private Group group = Group.BAD;
     private Random random = new Random();
-    Rectangle rectangle = new Rectangle();// 只需要一个对象
+    public Rectangle rectangle = new Rectangle();// 只需要一个对象
 //    FireStrategy fireStrategy = new DefaultFireStrategy();
     FireStrategy fireStrategy = null;
     GameModel gameModel = null;
@@ -106,6 +107,8 @@ public class Tank extends GameObject {
     }
 
     private  void move(){
+        preX = x;
+        preY = y;
         if (!moving) return;
         switch (dir){
             case LEFT:
@@ -141,6 +144,12 @@ public class Tank extends GameObject {
         rectangle.x = this.x;
         rectangle.y = this.y;
 
+    }
+    public void back(){
+        if (this.group == Group.BAD){
+            this.x = this.preX;
+            this.y = this.preY;
+        }
     }
 
     private void boundsCheck() {
