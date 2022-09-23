@@ -6,7 +6,7 @@ import java.awt.*;
  * @author li yamin
  * @create 2022-09-20
  */
-public class Bullet {
+public class Bullet extends GameObject{
     private int x, y;
     private static final int SPEED = 8; // 速度
     private Dir dir;
@@ -30,12 +30,12 @@ public class Bullet {
         rectangle.width = WIDTH;
         rectangle.height = HEIGHT;
 
-        gameModel.bulletList.add(this);// new出来时就加入到list集合中，这样在fire()可以直接new对象出来就可以
+        gameModel.add(this);// new出来时就加入到list集合中，这样在fire()可以直接new对象出来就可以
     }
 
     public void paint(Graphics g) {
         if (!living){// 死了
-            gameModel.bulletList.remove(this);
+            gameModel.remove(this);
         }
         switch (dir) {
             case DOWN:
@@ -92,7 +92,7 @@ public class Bullet {
             this.die();
             int ex = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
             int ey = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-            gameModel.explodeList.add(new Explode(ex, ey, this.gameModel));// 爆炸
+            gameModel.add(new Explode(ex, ey, this.gameModel));// 爆炸
         }
     }
 

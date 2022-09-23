@@ -8,7 +8,7 @@ import java.util.Random;
  * @author li yamin
  * @create 2022-09-20
  */
-public class Tank {
+public class Tank extends GameObject {
     private int x;
     private int y; // 位置
     private Dir dir = Dir.DOWN; // 方向
@@ -43,7 +43,7 @@ public class Tank {
 
     public void paint(Graphics g) {
         if (!living){
-            gameModel.tankList.remove(this);
+            gameModel.remove(this);
 //            if (this.group == Group.GOOD){// 打我方坦克
 //                tankFrame.tank = null;
 //                System.exit(0);
