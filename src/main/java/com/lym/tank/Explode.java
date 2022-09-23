@@ -11,19 +11,16 @@ public class Explode extends GameObject{
     public static final int WIDTH = ResourceMgr.explodes[0].getWidth();
     private int x,y;
     private int step = 0;
-    TankFrame tankFrame = null;
-    GameModel gameModel = null;
 
-    public Explode(int x, int y, GameModel gameModel) {
+    public Explode(int x, int y) {
         this.x = x;
         this.y = y;
-        this.gameModel = gameModel;
     }
 
     public void paint(Graphics g){
         g.drawImage(ResourceMgr.explodes[step++],x,y,null);
         if (step == ResourceMgr.explodes.length){
-            gameModel.remove(this);
+            GameModel.getInstance().remove(this);
         }
     }
 }

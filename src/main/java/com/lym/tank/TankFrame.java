@@ -17,7 +17,7 @@ import java.util.List;
 public class TankFrame extends Frame {
 
     public static int GAME_WIDTH = 800, GAME_HEIGHT = 600;
-    GameModel gameModel = new GameModel();
+    GameModel gameModel = GameModel.getInstance();
 
     public TankFrame(){
         setVisible(true);
@@ -39,7 +39,7 @@ public class TankFrame extends Frame {
     // 生成、改变图形时自动调用
     @Override
     public void paint(Graphics g){
-        gameModel.paint(g);// 画GameModel
+        GameModel.getInstance().paint(g);// 画GameModel
 
     }
 
@@ -112,7 +112,7 @@ public class TankFrame extends Frame {
         }
 
         private void setMainTankDir(){
-            if (!bL && !bR && !bU && !bD){
+                if (!bL && !bR && !bU && !bD){
                 gameModel.tank.setMoving(false);
             }else{
                 gameModel.tank.setMoving(true);

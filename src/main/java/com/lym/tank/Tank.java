@@ -23,16 +23,14 @@ public class Tank extends GameObject {
     public Rectangle rectangle = new Rectangle();// 只需要一个对象
 //    FireStrategy fireStrategy = new DefaultFireStrategy();
     FireStrategy fireStrategy = null;
-    GameModel gameModel = null;
     public Tank(){}
 
-    public Tank(int x, int y, Dir dir, Group group, GameModel gameModel){
+    public Tank(int x, int y, Dir dir, Group group){
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.gameModel = gameModel;
 
         // rectangle赋值
         rectangle.x = this.x;
@@ -44,7 +42,7 @@ public class Tank extends GameObject {
 
     public void paint(Graphics g) {
         if (!living){
-            gameModel.remove(this);
+            GameModel.getInstance().remove(this);
 //            if (this.group == Group.GOOD){// 打我方坦克
 //                tankFrame.tank = null;
 //                System.exit(0);

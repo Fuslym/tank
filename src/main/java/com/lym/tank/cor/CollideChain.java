@@ -23,6 +23,7 @@ public class CollideChain implements Collide {
 //        }
         add(new BulletTankCollide());
         add(new TankTankCollide());
+        add(new BulletWallCollide());
     }
     public void add(Collide c){
         collideList.add(c);
