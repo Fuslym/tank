@@ -9,8 +9,6 @@ import java.util.Random;
  * @create 2022-09-20
  */
 public class Tank extends GameObject {
-    private int x;
-    private int y; // 位置
     private int preX,preY;
     private Dir dir = Dir.DOWN; // 方向
     private static final int SPEED = 5; // 速度

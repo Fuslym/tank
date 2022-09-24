@@ -7,7 +7,6 @@ import java.awt.*;
  * @create 2022-09-20
  */
 public class Bullet extends GameObject{
-    private int x, y;
     private static final int SPEED = 8; // 速度
     private Dir dir;
     public static final int HEIGHT = ResourceMgr.bulletD.getHeight();
